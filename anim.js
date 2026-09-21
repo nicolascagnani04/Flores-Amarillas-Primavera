@@ -1,102 +1,113 @@
-// Sincronizar las letras con la canción
-var audio = document.querySelector("audio");
-var lyrics = document.querySelector("#lyrics");
+// Sincronizar la letra de "Blessed" con la canción
+const audio = document.querySelector("audio");
+const lyrics = document.querySelector("#lyrics");
 
-// Array de objetos que contiene cada línea y su tiempo de aparición en segundos
-var lyricsData = [
- { text: "Creo que con una canción", time: 18 },
-{ text: "La tristeza es más hermosa", time: 19 },
-{ text: "Creo que con una palabra", time: 28 },
-{ text: "Puedo decir mil cosas", time: 30 },
-{ text: "Pero no creo en el circo de la información", time: 39 },
-{ text: "Todo decanta en tu amor", time: 45 },
-{ text: "Y en mi dolor", time: 51 },
-{ text: "Creo que es mejor morir de pie", time: 57 },
-{ text: "Que vivir de rodillas", time: 59 },
-{ text: "Creo que hoy el viento me alcanzó", time: 67 },
-{ text: "El olor de tu mejilla", time: 68 },
-{ text: "Creo en mi guitarra", time: 78 },
-{ text: "Creo en el sol", time: 79 },
-{ text: "Si me cura las heridas", time: 83 },
-{ text: "Creo en tu voz", time: 90 },
-{ text: "Creo en la vida, en la noche, en tu alma", time: 95 },
-{ text: "Y no creo en todo lo demás", time: 100 },
-{ text: "Creo en tu estrella en aquella", time: 105 },
-{ text: "Que busco en mi sueño mejor", time: 107 },
-{ text: "Para poder luchar", time: 110 },
+// Tiempo de inicio de cada línea, en segundos.
+const lyricsData = [
+  { text: "Everywhere that I go", time: 0.1 },
+  { text: "Everywhere that I be", time: 2.92 },
+  { text: "If you were not surrounding me", time: 5.88 },
+  { text: "With your energy", time: 10.45 },
+  { text: "I don't wanna be there", time: 15.28 },
+  { text: "Don't wanna be anywhere", time: 18.16 },
+  { text: "Any place that I can't feel you", time: 21.27 },
+  { text: "I just wanna be near you", time: 24.98 },
 
-{ text: " ", time: 119 },
+  { text: "And yes, I'm a mess but I'm blessed", time: 30.19 },
+  { text: "To be stuck with you, oh", time: 32.79 },
+  { text: "Sometimes it gets unhealthy", time: 36.47 },
+  { text: "We can't be by ourselves, we", time: 40.1 },
+  { text: "Will always need each other", time: 43.33 },
+  { text: "Yes, I'm a mess but I'm blessed", time: 45.81 },
+  { text: "To be stuck with you", time: 48.14 },
+  { text: "I just want you to know that", time: 51.43 },
+  { text: "If I could, I swear I'd go back", time: 54.8 },
+  { text: "Make everything all better, whoa", time: 58.94 },
+  { text: "", time: 62.79 },
 
-{ text: "Creo en esas tarde que viví", time: 149 },
-{ text: "Jugando a la pelota", time: 150 },
-{ text: "Creo que educar es combatir", time: 159 },
-{ text: "Y el silencio no es mi idioma", time: 161 },
-{ text: "Creo en tu sonrisa", time: 170 },
-{ text: "Creo en mí si te veo hoy", time: 171 },
-{ text: "Y me pedís que no me rinda", time: 175 },
-{ text: "Sigo por vos", time: 181 },
+  { text: "It's the things that you say", time: 76.19 },
+  { text: "It's the way that you pray", time: 79.8 },
+  { text: "Prey on my insecurities", time: 82.7 },
+  { text: "I know you're feeling me", time: 86.63 },
+  { text: "I know sometimes I do wrong", time: 91.33 },
+  { text: "But hear the words of this song", time: 94.2 },
+  { text: "When I go I don't stay gone for long", time: 97.31 },
+  { text: "Don't know what's going on", time: 101.81 },
 
-{ text: "Creo en la lluvia cuando cambia", time: 188 },
-{ text: "El olor de mi tierra", time: 190 },
-{ text: "Creo en el mar cuando amanece", time: 198 },
-{ text: "Abrazándose a las piedras", time: 199 },
-{ text: "Creo en los jazmines", time: 208 },
-{ text: "Que un dios me bajo esa vez", time: 211 },
-{ text: "Para poder conocerte", time: 213 },
-{ text: "Como mujer", time: 220 },
-{ text: "Creo en la vida, en la noche, en tu alma", time: 226 },
-{ text: "Y no creo en todo lo demás", time: 231 },
-{ text: "Creo en tu estrella en aquella", time: 233 },
-{ text: "Que busco en mi sueño mejor", time: 239 },
-{ text: "Para poder luchar", time: 240 },
+  { text: "And yes, I'm a mess but I'm blessed", time: 106.3 },
+  { text: "To be stuck with you, oh", time: 109.16 },
+  { text: "Sometimes it gets unhealthy", time: 112.32 },
+  { text: "We can't be by ourselves, we", time: 115.97 },
+  { text: "Will always need each other", time: 119.43 },
+  { text: "And yes, I'm a mess but I'm blessed", time: 121.79 },
+  { text: "To be stuck with you", time: 124.23 },
+  { text: "I just want you to know that", time: 127.47 },
+  { text: "If I could, I swear I'd go back", time: 131.9 },
+  { text: "Make everything all better, whoa", time: 134.57 },
+  { text: "", time: 139.47 },
 
-{ text: " ", time: 248 },
+  { text: "And I'm coming back home to you", time: 143.6 },
+  { text: "", time: 148.45 },
+  { text: "And I'm coming back home to you", time: 150.71 },
+  { text: "I'm coming back home", time: 154.61 },
+  { text: "I'm coming back home to you", time: 158.7 },
+  { text: "I'm coming back home", time: 162.46 },
+  { text: "I'm coming back home to you", time: 166.13 },
+  { text: "I'm coming back home", time: 169.88 },
+  { text: "I'm coming back home to you", time: 173.94 },
+  { text: "I'm coming back home", time: 177.49 },
+  { text: "I'm coming back home to you", time: 181.48 },
+  { text: "I'm coming back home", time: 185.13 },
+  { text: "I'm coming back home to you", time: 189.25 },
+  { text: "I'm coming back home", time: 192.65 },
 
-{ text: "Creo en la vida, en la noche, en tu alma", time: 254 },
-{ text: "Y no creo en todo lo demás", time: 259 },
-{ text: "Creo en tu estrella en aquella", time: 261 },
-{ text: "Que busco en mi sueño mejor", time: 267 },
-{ text: "Para poder luchar", time: 269 },
-
-{ text: " ", time: 277 },
- 
-  
+  { text: "And yes, I'm a mess but I'm blessed", time: 197.67 },
+  { text: "To be stuck with you", time: 200.47 },
+  { text: "Sometimes it gets unhealthy", time: 203.47 },
+  { text: "We can't be by ourselves, we", time: 207.15 },
+  { text: "Will always need each other", time: 210.94 },
+  { text: "And yes, I'm a mess but I'm blessed", time: 213.2 },
+  { text: "To be stuck with you", time: 215.91 },
+  { text: "I just want you to know that", time: 219.1 },
+  { text: "If I could, I swear I'll go back", time: 222.66 },
+  { text: "Make everything all better, whoa", time: 226.23 },
 ];
 
-// Animar las letras
+let currentLineIndex = -1;
+
 function updateLyrics() {
-  var time = Math.floor(audio.currentTime);
-  var currentLine = lyricsData.find(
-    (line) => time >= line.time && time < line.time + 6
-  );
+  let lineIndex = -1;
 
-  if (currentLine) {
-    // Calcula la opacidad basada en el tiempo en la línea actual
-    var fadeInDuration = 0.1; // Duración del efecto de aparición en segundos
-    var opacity = Math.min(1, (time - currentLine.time) / fadeInDuration);
-
-    // Aplica el efecto de aparición
-    lyrics.style.opacity = opacity;
-    lyrics.innerHTML = currentLine.text;
-  } else {
-    // Restablece la opacidad y el contenido si no hay una línea actual
-    lyrics.style.opacity = 0;
-    lyrics.innerHTML = "";
+  for (let i = 0; i < lyricsData.length; i += 1) {
+    if (audio.currentTime >= lyricsData[i].time) {
+      lineIndex = i;
+    } else {
+      break;
+    }
   }
+
+  if (lineIndex === currentLineIndex) return;
+
+  currentLineIndex = lineIndex;
+  const currentText = lineIndex >= 0 ? lyricsData[lineIndex].text : "";
+
+  lyrics.textContent = currentText;
+  lyrics.style.opacity = currentText ? "1" : "0";
 }
 
-setInterval(updateLyrics, 1000);
+audio.addEventListener("timeupdate", updateLyrics);
+audio.addEventListener("seeked", updateLyrics);
+setInterval(updateLyrics, 100);
+updateLyrics();
 
-//funcion titulo
-// Función para ocultar el título después de 216 segundos
+// Ocultar el título después de 216 segundos.
 function ocultarTitulo() {
-  var titulo = document.querySelector(".titulo");
-  titulo.style.animation =
-    "fadeOut 3s ease-in-out forwards"; /* Duración y función de temporización de la desaparición */
-  setTimeout(function () {
+  const titulo = document.querySelector(".titulo");
+  titulo.style.animation = "fadeOut 3s ease-in-out forwards";
+
+  setTimeout(() => {
     titulo.style.display = "none";
-  }, 3000); // Espera 3 segundos antes de ocultar completamente
+  }, 3000);
 }
 
-// Llama a la función después de 216 segundos (216,000 milisegundos)
 setTimeout(ocultarTitulo, 216000);
