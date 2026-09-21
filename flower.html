@@ -9,7 +9,53 @@
     <title>Flower</title>
   </head>
   <body class="container">
-    <audio src="sound/ChristianBasso&HaienQiu-Flowers.mp3" controls autoplay></audio>
+    <audio id="bgMusic" src="sound/ChristianBasso&HaienQiu-Flowers.mp3" preload="auto"></audio>
+
+    <button
+      id="musicButton"
+      type="button"
+      onclick="toggleMusic()"
+      style="
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        padding: 14px 22px;
+        min-width: 210px;
+        border: 2px solid rgba(255, 221, 80, 0.9);
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.78);
+        color: #ffe35b;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        box-shadow: 0 0 18px rgba(255, 220, 60, 0.35);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      "
+    >
+      ▶ Reproducir música
+    </button>
+
+    <script>
+      function toggleMusic() {
+        const music = document.getElementById("bgMusic");
+        const button = document.getElementById("musicButton");
+
+        if (music.paused) {
+          music.play();
+          button.textContent = "❚❚ Pausar música";
+        } else {
+          music.pause();
+          button.textContent = "▶ Reproducir música";
+        }
+      }
+
+      document.getElementById("bgMusic").addEventListener("ended", function () {
+        document.getElementById("musicButton").textContent = "▶ Reproducir música";
+      });
+    </script>
     <div id="lyrics">
      
     </div>
